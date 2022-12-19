@@ -54,6 +54,7 @@ public class SecurityConfig {
                         "/**/*.css",
                         "/**/*.js")
                 .permitAll()
+                .antMatchers("/cities").access("hasRole('ROLE_ADMIN')")
                 .anyRequest()
                 .authenticated()
                 .and()
