@@ -1,0 +1,2 @@
+GET http://localhost:8080/forecast?city1=1&city2=2&city3=3
+Content-Type: application/json

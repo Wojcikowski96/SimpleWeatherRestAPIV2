@@ -1,0 +1,64 @@
+<class>
+    <city>
+        <id>1</id>
+        <name>Łódź</name>
+        <longitude>19.447221</longitude>
+        <latitude>51.761674</latitude>
+    </city>
+
+    <city>
+        <id>2</id>
+        <name>Berlin</name>
+        <longitude>13.41</longitude>
+        <latitude>52.52</latitude>
+    </city>
+    <city>
+        <id>3</id>
+        <name>Bratysława</name>
+        <longitude>17.10</longitude>
+        <latitude>48.14</latitude>
+    </city>
+    <city>
+        <id>4</id>
+        <name>Sydney</name>
+        <longitude>151.20</longitude>
+        <latitude>-33.86</latitude>
+    </city>
+    <city>
+        <id>5</id>
+        <name>Nowy York</name>
+        <longitude>-73.935242</longitude>
+        <latitude>40.730610</latitude>
+    </city>
+    <city>
+        <id>6</id>
+        <name>Tokyo</name>
+        <longitude>139.839478</longitude>
+        <latitude>35.652832</latitude>
+    </city>
+    <city>
+        <id>7</id>
+        <name>Paryż</name>
+        <longitude>2.349014</longitude>
+        <latitude>48.864716</latitude>
+    </city>
+    <city>
+        <id>8</id>
+        <name>Moskwa</name>
+        <longitude>37.618423</longitude>
+        <latitude>55.751244</latitude>
+    </city>
+    <city>
+        <id>9</id>
+        <name>Charków</name>
+        <longitude>36.232845</longitude>
+        <latitude>49.988358</latitude>
+    </city>
+    <city>
+        <id>10</id>
+        <name>Rzym</name>
+        <longitude>12.496366</longitude>
+        <latitude>41.902782</latitude>
+    </city>
+
+</class>

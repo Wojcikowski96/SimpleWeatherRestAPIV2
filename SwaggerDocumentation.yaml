@@ -1,0 +1,109 @@
+openapi: 3.0.0
+servers:
+
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/wojcikowski1/WeatherApp/1.0.0
+  - description: My local server running on Tomcat
+    url: https://localhost:8080
+
+info:
+  version: "1.0.0"
+  title: My weather REST API
+  description: Simple API for weather application
+paths:
+  /cities:
+    get:
+      tags:
+        - Locations
+      description: Returns 10 predefined locations
+      operationId: getCities
+
+      responses:
+        '200':
+          description: All available cities in the service
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cities'
+                     
+        '400':
+          description: Bad request, for example instead of cities will be ctis
+  /forecast:
+    get:
+      tags:
+        - Forecast
+      description: Returns forecast for maximally 5 cities at once
+      operationId: getForecast
+      parameters:
+        - in: query
+          name: city1
+          schema:
+            type: integer
+          required: true
+          description: numeric ID of city from predefinied list
+        - in: query
+          name: city2
+          schema:
+            type: integer
+          required: false
+          description: numeric ID of city from predefinied list
+        - in: query
+          name: city3
+          schema:
+            type: integer
+          required: false
+          description: numeric ID of city from predefinied list
+        - in: query
+          name: city4
+          schema:
+            type: integer
+          required: false
+          description: numeric ID of city from predefinied list
+        - in: query
+          name: city5
+          schema:
+            type: integer
+          required: false
+          description: numeric ID of city from predefinied list
+
+      responses:
+        '200':
+          description: Json response from external weather API
+          content:
+            application/json:
+             schema:
+              $ref: '#/components/schemas/Weathers'
+
+        '400':
+          description: Bad request
+components:
+    schemas:
+     Cities:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+          name:
+            type: string
+          longitude:
+            type: number
+          latitude:
+            type: number
+     Weathers:
+      type: array
+      items:
+        type: object
+        properties:
+          temperature:
+            type: number
+          description:
+            type: string
+          location:
+            type: string
+          main:
+            type: string
+          cloudsPercentage:
+            type: number

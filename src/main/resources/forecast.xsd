@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://task.example.com"
+           targetNamespace="http://task.example.com">
+
+    <xs:element name="getForecast">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name = "cityID" type="xs:long"/>
+                <xs:element name = "correlationId" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getForecastResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="CustomWeatherDto" type="tns:customWeatherDto"/>
+            </xs:sequence>
+        </xs:complexType>
+
+    </xs:element>
+
+    <xs:complexType name="customWeatherDto">
+        <xs:sequence>
+            <xs:element name="locationID" nillable="false" type="xs:long"/>
+            <xs:element name="description" nillable="false" type="xs:string"/>
+            <xs:element name="temperature" nillable="false" type="xs:double"/>
+            <xs:element name="location" nillable="false" type="xs:string"/>
+            <xs:element name="iconUrl" nillable="false" type="xs:string"/>
+            <xs:element name="correlationID" nillable="false" type="tns:RequestFlowData"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RequestFlowData">
+        <xs:sequence>
+            <xs:element name="CORRELATION_ID_KEY" nillable="true" type="xs:string"/>
+            <xs:element name="correlationIsd" nillable="true" type="xs:string"/>
+            <xs:element name="retraceCount" nillable="true" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
