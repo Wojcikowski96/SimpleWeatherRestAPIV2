@@ -2,10 +2,13 @@ package com.example.task.configuration;
 
 //import com.example.task.repository.UserDao;
 import com.example.task.repository.UserDao;
+import com.example.task.users.service.MyUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -23,6 +26,7 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.util.Arrays;
@@ -37,6 +41,7 @@ public class SecurityConfig {
 
     private final JwtAthFilter jwtAuthFilter;
     private final UserDao userDao;
+    private final MyUserDetailsService myService;
   //na razie userzy na sztywno
 
     @Bean
@@ -78,7 +83,7 @@ public class SecurityConfig {
     public AuthenticationProvider authenticationProvider() {
         final DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         //tutaj wskazujemy serwis user detailsowy, który może mieć inną logikę pozyskiwania userów
-        authenticationProvider.setUserDetailsService(userDetailsService());
+        authenticationProvider.setUserDetailsService(myService);
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
     }
@@ -115,13 +120,28 @@ public class SecurityConfig {
 
     }
    //nadpisując tą wbudowaną metodę, można zaciągać dane z bazy danych
-@Bean
-    public UserDetailsService userDetailsService(){
-        return new UserDetailsService() {
-            @Override
-            public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-                return userDao.findUserByEmail(email);
-            }
-        };
-}
+//@Bean
+//    public UserDetailsService userDetailsService(){
+//        return new UserDetailsService() {
+//            @Override
+//            public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+//                return userDao.findUserByEmail(email);
+//            }
+//        };
+//}
+
+    @Bean
+    public RoleHierarchy roleHierarchy() {
+        RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
+        String hierarchy = "ROLE_ADMIN > ROLE_STAFF \n ROLE_STAFF > ROLE_USER";
+        roleHierarchy.setHierarchy(hierarchy);
+        return roleHierarchy;
+    }
+
+    @Bean
+    public DefaultWebSecurityExpressionHandler myWebSecurityExpressionHandler() {
+        DefaultWebSecurityExpressionHandler expressionHandler = new DefaultWebSecurityExpressionHandler();
+        expressionHandler.setRoleHierarchy(roleHierarchy());
+        return expressionHandler;
+    }
 }

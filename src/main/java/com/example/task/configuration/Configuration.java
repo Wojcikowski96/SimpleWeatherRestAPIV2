@@ -57,13 +57,13 @@ public class Configuration {
         this.miner = citiesMiner;
         this.repository = repository;
     }
-    @Bean
-    public void populateCities() throws ParserConfigurationException, IOException, SAXException {
-        cities = CitiesMiner.mineData();
-        for(City city: cities){
-            repository.save(city);
-        }
-    }
+//    @Bean
+//    public void populateCities() throws ParserConfigurationException, IOException, SAXException {
+//        cities = CitiesMiner.mineData();
+//        for(City city: cities){
+//            repository.save(city);
+//        }
+//    }
 
 
 

@@ -1,5 +1,6 @@
 package com.example.task.clients.model;
 
+import org.hibernate.annotations.Subselect;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.validation.constraints.Min;
 
 @Component
 @Entity
+@Subselect(value = "")
 public class City {
     private String name;
     private double latitude;

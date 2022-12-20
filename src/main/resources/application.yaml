@@ -10,7 +10,45 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+#      quartz:
+#        job-store-type: jdbc
+#        properties:
+#          org:
+#            quartz:
+#              threadPool:
+#                threadCount: '5'
+#
+#  mail:
+#    port: '587'
+#    properties:
+#      mail:
+#        smtp:
+#          auth: 'true'
+#          starttls:
+#            enable: 'true'
+#    host: smtp.gmail.com
+#    username: wojcikowski1@gmail.com
+#    password: ''
+#  datasource:
+#    username: ''
+#    url: ''
+#    password: ''
+
+  jpa:
+    show-sql: true
+    properties:
+      hibernate.dialect: org.hibernate.dialect.SQLServerDialect
+      hibernate.hbm2ddl.auto: update
+      hibernate.database: MIFID_DEV4
+
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;encrypt=true;trustServerCertificate=true;
+    username: MIFID_DEV4
+    password: Borutta666
+    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+
 
 
 server:
-  port : 8081
+  port : 8080

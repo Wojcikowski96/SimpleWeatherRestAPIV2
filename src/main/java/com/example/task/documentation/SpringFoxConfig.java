@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 @Configuration
-@EnableSwagger2
+
 public class SpringFoxConfig {
     @Bean
     public Docket api(){
