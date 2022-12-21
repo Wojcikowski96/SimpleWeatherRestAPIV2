@@ -1,12 +1,11 @@
-package com.example.task.configuration;
+package com.example.task.configuration.security;
 
 //import com.example.task.repository.UserDao;
+import com.example.task.filter.JwtAthFilter;
 import com.example.task.repository.UserDao;
-import com.example.task.users.service.MyUserDetailsService;
+import com.example.task.service.MyUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,24 +15,12 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-import static com.example.task.configuration.Configuration.Roles.*;
 
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -59,7 +46,8 @@ public class SecurityConfig {
                         "/**/*.css",
                         "/**/*.js")
                 .permitAll()
-                .antMatchers("/cities").access("hasRole('ROLE_ADMIN')")
+                //.antMatchers("/cities").permitAll()
+                .antMatchers("/register").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

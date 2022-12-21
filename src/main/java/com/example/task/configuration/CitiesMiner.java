@@ -1,6 +1,10 @@
 package com.example.task.configuration;
 
 import com.example.task.clients.model.City;
+import com.example.task.repository.AppRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -17,8 +21,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class CitiesMiner{
-    public static List<City> mineData() throws ParserConfigurationException, IOException, SAXException {
+@Autowired
+    AppRepository citiesRepository;
+    @Bean
+    public  void mineData() throws ParserConfigurationException, IOException, SAXException {
         List<City> cities = new ArrayList<>();
         File file = new File(
                 "Cities.xml");
@@ -48,10 +56,16 @@ public class CitiesMiner{
                 double latitude = Double.parseDouble(stringLatitude);
                 long identity = Long.parseLong(stringIdentity);
 
-                cities.add(new City(stringName, latitude, longitude, identity));
+                City city = new City();
+                city.setName(stringName);
+                city.setLatitude(latitude);
+                city.setLongitude(longitude);
+
+                cities.add(city);
+                citiesRepository.save(city);
 
             }
         }
-        return cities;
+
     }
 }

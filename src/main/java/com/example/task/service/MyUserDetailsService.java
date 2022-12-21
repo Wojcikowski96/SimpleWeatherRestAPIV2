@@ -1,4 +1,4 @@
-package com.example.task.users.service;
+package com.example.task.service;
 
 import com.example.task.users.Privilage;
 import com.example.task.users.Role;
@@ -33,14 +33,16 @@ public class MyUserDetailsService implements UserDetailsService {
         Optional<User> user = userRepository.findByEmail(email);
         Optional<Role> role = roleRepository.findByName("ROLE_USER");
         if (user.isPresent() && role.isPresent()) {
+
             return new org.springframework.security.core.userdetails.User(
+                    user.get().getEmail(), user.get().getPassword(), user.get().isEnabled(), true, true,
+                    true, getAuthorities(user.get().getRoles()));
+        }
+                    return new org.springframework.security.core.userdetails.User(
                     " ", " ", true, true, true, true,
                     getAuthorities(List.of(role.get())));
-        }
 
-        return new org.springframework.security.core.userdetails.User(
-                user.get().getEmail(), user.get().getPassword(), user.get().isEnabled(), true, true,
-                true, getAuthorities(user.get().getRoles()));
+
     }
 
     private Collection<? extends GrantedAuthority> getAuthorities(

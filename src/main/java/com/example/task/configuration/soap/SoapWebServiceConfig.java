@@ -1,4 +1,4 @@
-package com.example.task.configuration;
+package com.example.task.configuration.soap;
 
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;

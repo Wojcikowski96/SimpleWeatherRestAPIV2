@@ -1,6 +1,8 @@
 package com.example.task.users;
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,6 +12,7 @@ import java.util.Collection;
 @Table(name = "USERS")
 @Setter
 @Getter
+@RequiredArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
