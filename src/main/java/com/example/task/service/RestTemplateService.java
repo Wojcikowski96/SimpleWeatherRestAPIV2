@@ -1,7 +1,7 @@
 package com.example.task.service;
 
 
-import com.example.task.dtoweather.OpenWeatherDtoWeather;
+import com.example.task.openWeatherDto.OpenWeatherDtoWeather;
 import com.example.task.exception.MyResponseErrorHandler;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.springframework.boot.web.client.RestTemplateBuilder;

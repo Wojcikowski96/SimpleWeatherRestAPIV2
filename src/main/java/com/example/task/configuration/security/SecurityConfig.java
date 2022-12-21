@@ -1,8 +1,6 @@
 package com.example.task.configuration.security;
 
-//import com.example.task.repository.UserDao;
 import com.example.task.filter.JwtAthFilter;
-import com.example.task.repository.UserDao;
 import com.example.task.service.MyUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -27,7 +25,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final JwtAthFilter jwtAuthFilter;
-    private final UserDao userDao;
     private final MyUserDetailsService myService;
   //na razie userzy na sztywno
 
@@ -59,10 +56,10 @@ public class SecurityConfig {
         csrf().disable();
         return http.build();
     }
-    @Bean
-    PasswordEncoder getPasswordEncoder() {
-        return  NoOpPasswordEncoder.getInstance();
-    }
+//    @Bean
+//    PasswordEncoder getPasswordEncoder() {
+//        return  NoOpPasswordEncoder.getInstance();
+//    }
     @Bean
     public AuthenticationManager authenticationManager (AuthenticationConfiguration config) throws Exception{
         return config.getAuthenticationManager();
@@ -76,47 +73,13 @@ public class SecurityConfig {
         return authenticationProvider;
     }
 
-//        @Bean
-//    protected UserDetailsService userDetailsService() {
-//        UserDetails timmy = User.builder()
-//                .username("timmy")
-//                .password(passwordEncoder().encode("password"))
-//                .roles(INTERN.name())
-//                .build();
-//
-//        UserDetails john = User.builder()
-//                .username("john")
-//                .password(passwordEncoder().encode("password"))
-//                .roles(SUPERVISOR.name())
-//                .build();
-//
-//        UserDetails sarah = User.builder()
-//                .username("sarah")
-//                .password(passwordEncoder().encode("password"))
-//                .roles(ADMIN.name())
-//                .build();
-//
-//        InMemoryUserDetailsManager userDetailsManager = new InMemoryUserDetailsManager(timmy, john, sarah);
-//
-//        return userDetailsManager;
-//
-//    }
+
     @Bean
     public PasswordEncoder passwordEncoder(){
 
         return new BCryptPasswordEncoder(15);
 
     }
-   //nadpisując tą wbudowaną metodę, można zaciągać dane z bazy danych
-//@Bean
-//    public UserDetailsService userDetailsService(){
-//        return new UserDetailsService() {
-//            @Override
-//            public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-//                return userDao.findUserByEmail(email);
-//            }
-//        };
-//}
 
     @Bean
     public RoleHierarchy roleHierarchy() {

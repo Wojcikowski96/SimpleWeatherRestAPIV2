@@ -1,4 +1,4 @@
-package com.example.task.users.api;
+package com.example.task.repository;
 
 import com.example.task.users.Privilage;
 import com.example.task.users.Role;

@@ -1,16 +1,15 @@
 package com.example.task.forecastbuilder;
 
 import com.example.task.clients.model.*;
-import com.example.task.dtoweather.OpenWeatherDtoWeather;
+import com.example.task.openWeatherDto.OpenWeatherDtoWeather;
 import com.example.task.exception.CityNotFoundException;
 import com.example.task.exception.CorrelationIdEmptyException;
-import com.example.task.repository.AppRepository;
+import com.example.task.repository.CitiesRepository;
 import com.example.task.service.RestTemplateService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
-import static org.hibernate.tool.schema.SchemaToolingLogging.LOGGER;
 @Component
 public class ForecastBuilder {
     @Value("${config.url}")
@@ -22,9 +21,9 @@ public class ForecastBuilder {
     private String iconbaseUrl;
     @Value("${config.correlationID}")
     private String correlationID;
-    private AppRepository repository;
+    private CitiesRepository repository;
     private RequestFlowData data;
-    ForecastBuilder(AppRepository repository, RequestFlowData data){
+    ForecastBuilder(CitiesRepository repository, RequestFlowData data){
         this.repository = repository;
         this.data = data;
     }

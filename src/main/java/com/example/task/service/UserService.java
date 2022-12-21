@@ -3,10 +3,11 @@ package com.example.task.service;
 import com.example.task.clients.model.RegistrationRequest;
 import com.example.task.users.Role;
 import com.example.task.users.User;
-import com.example.task.users.api.RoleRepository;
-import com.example.task.users.api.UserRepository;
+import com.example.task.repository.RoleRepository;
+import com.example.task.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -18,6 +19,8 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository usersRepository;
     private final RoleRepository roleRepository;
+
+    private final PasswordEncoder passwordEncoder;
     public ResponseEntity registerUser(RegistrationRequest userDto){
         Optional<User> optionalUser = usersRepository.findByEmail(userDto.getEmail());
         if(optionalUser.isPresent()){
@@ -27,8 +30,9 @@ public class UserService {
             User user = new User();
             user.setFirstName(userDto.getFirstName());
             user.setLastName(userDto.getLastName());
-            user.setPassword(userDto.getPassword());
+            user.setPassword(passwordEncoder.encode(userDto.getPassword()));
             user.setEmail(userDto.getEmail());
+            user.setEnabled(true);
 
             Optional<Role> role  = roleRepository.findByName("ROLE_USER");
             if(role.isPresent()){

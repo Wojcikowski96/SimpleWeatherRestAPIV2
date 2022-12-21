@@ -1,4 +1,4 @@
-package com.example.task.dtoweather;
+package com.example.task.openWeatherDto;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -84,19 +84,6 @@ public class CorrelationGetter implements Filter {
 
 
 
-
-//        if (!currentRequestIsAsyncDispatcher(httpServletRequest)) {
-//            if (currentCorrId == null) {
-//                currentCorrId = UUID.randomUUID().toString();
-//                LOGGER.info("No correlationId found in Header. Generated : " + currentCorrId);
-//            } else {
-//                LOGGER.info("Found correlationId in Header : " + currentCorrId);
-//            }
-//
-//            RequestFlowData.setId(currentCorrId);
-//        }
-
-
       filterChain.doFilter(wrapper, servletResponse);
 
     }

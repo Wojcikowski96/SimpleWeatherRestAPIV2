@@ -1,25 +1,20 @@
 package com.example.task.configuration.datagenerator;
 
-import com.example.task.clients.model.City;
-import com.example.task.configuration.CitiesMiner;
-import com.example.task.repository.AppRepository;
+import com.example.task.repository.CitiesRepository;
 import com.example.task.users.Privilage;
 import com.example.task.users.Role;
 import com.example.task.users.User;
-import com.example.task.users.api.PrivilageRepository;
-import com.example.task.users.api.RoleRepository;
-import com.example.task.users.api.UserRepository;
+import com.example.task.repository.PrivilageRepository;
+import com.example.task.repository.RoleRepository;
+import com.example.task.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.xml.sax.SAXException;
 
 import javax.transaction.Transactional;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -44,23 +39,14 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
 
     @Autowired
-    private AppRepository citiesRepository;
+    private CitiesRepository citiesRepository;
 
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
         if (alreadySetup)
             return;
-//        try {
-//            generateCityData();
-//
-//        } catch (ParserConfigurationException e) {
-//            throw new RuntimeException(e);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        } catch (SAXException e) {
-//            throw new RuntimeException(e);
-//        }
+
         Privilage readPrivilege
                 = createPrivilegeIfNotFound("READ_PRIVILEGE");
         Privilage writePrivilege

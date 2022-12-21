@@ -1,7 +1,7 @@
-package com.example.task.configuration;
+package com.example.task.configuration.utils;
 
 import com.example.task.clients.model.City;
-import com.example.task.repository.AppRepository;
+import com.example.task.repository.CitiesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -24,7 +24,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CitiesMiner{
 @Autowired
-    AppRepository citiesRepository;
+CitiesRepository citiesRepository;
     @Bean
     public  void mineData() throws ParserConfigurationException, IOException, SAXException {
         List<City> cities = new ArrayList<>();

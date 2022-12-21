@@ -3,8 +3,7 @@ package com.example.task.controller;
 import com.example.task.clients.model.City;
 import com.example.task.clients.model.CustomWeatherDto;
 import com.example.task.clients.model.GetForecast;
-import com.example.task.clients.model.RequestFlowData;
-import com.example.task.repository.AppRepository;
+import com.example.task.repository.CitiesRepository;
 import com.example.task.service.WeatherService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,10 +20,10 @@ import java.util.List;
 @Api(value="", tags={"Mój serwis"})
 public class RestController {
     private final WeatherService service;
-    private final AppRepository repository;
+    private final CitiesRepository repository;
 
 
-    public RestController(WeatherService weatherService, AppRepository repository) {
+    public RestController(WeatherService weatherService, CitiesRepository repository) {
         this.service = weatherService;
         this.repository = repository;
     }

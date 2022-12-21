@@ -1,4 +1,4 @@
-package com.example.task.users.api;
+package com.example.task.repository;
 
 import com.example.task.users.User;
 import org.springframework.data.jpa.repository.JpaRepository;

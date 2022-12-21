@@ -1,8 +1,8 @@
 package com.example.task.configuration;
 
 import com.example.task.clients.model.City;
-import com.example.task.repository.AppRepository;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import com.example.task.configuration.utils.CitiesMiner;
+import com.example.task.repository.CitiesRepository;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 //import org.springframework.core.annotation.Order;
@@ -14,27 +14,10 @@ import org.springframework.context.annotation.Bean;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 //import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.example.task.configuration.Configuration.Roles.*;
 
 @org.springframework.context.annotation.Configuration
 //@EnableWebMvc
@@ -50,10 +33,10 @@ public class Configuration {
 
     }
     private  List<City> cities = new ArrayList<>();
-    private AppRepository repository;
+    private CitiesRepository repository;
     private CitiesMiner miner;
 
-    Configuration(CitiesMiner citiesMiner, AppRepository repository){
+    Configuration(CitiesMiner citiesMiner, CitiesRepository repository){
         this.miner = citiesMiner;
         this.repository = repository;
     }
