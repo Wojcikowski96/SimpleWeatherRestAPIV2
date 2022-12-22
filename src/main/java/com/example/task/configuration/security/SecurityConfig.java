@@ -4,6 +4,7 @@ import com.example.task.filter.JwtAthFilter;
 import com.example.task.service.MyUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -43,7 +44,7 @@ public class SecurityConfig {
                         "/**/*.css",
                         "/**/*.js")
                 .permitAll()
-                //.antMatchers("/cities").permitAll()
+                .antMatchers(HttpMethod.GET,"/cities", "/forecast/**").hasAuthority("READ_PRIVILEGE")
                 .antMatchers("/register").permitAll()
                 .anyRequest()
                 .authenticated()
