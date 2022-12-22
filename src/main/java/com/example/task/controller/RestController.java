@@ -7,6 +7,12 @@ import com.example.task.repository.CitiesRepository;
 import com.example.task.service.WeatherService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.logging.log4j.Logger;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.xml.sax.SAXException;
 
@@ -16,9 +22,10 @@ import java.security.Principal;
 import java.util.List;
 
 @org.springframework.web.bind.annotation.RestController
-//@CrossOrigin(origins = "http://localhost:4200/", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:4200/")
 @Api(value="", tags={"Mój serwis"})
 public class RestController {
+    Logger log;
     private final WeatherService service;
     private final CitiesRepository repository;
 
@@ -27,14 +34,16 @@ public class RestController {
         this.service = weatherService;
         this.repository = repository;
     }
-    @RequestMapping("/user")
+    @GetMapping("/user")
     public Principal user(Principal user) {
+        //log.info(details);
         return user;
     }
     @GetMapping(path = "/cities")
     @ApiOperation("Gets all 10 predefined locations")
 
-    public List<City> getLocations() throws ParserConfigurationException, IOException, SAXException {
+    public List<City> getLocations(@AuthenticationPrincipal UserDetails user) throws ParserConfigurationException, IOException, SAXException {
+        log.info(user);
         return (List<City>) repository.findAll();
     }
 

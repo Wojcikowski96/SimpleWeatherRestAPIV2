@@ -20,6 +20,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -31,7 +35,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        http
+        http.cors().and()
                 .authorizeRequests()
                 .antMatchers("/authenticate",    "/",
                         "/v2/api-docs",           // swagger
@@ -44,7 +48,8 @@ public class SecurityConfig {
                         "/**/*.css",
                         "/**/*.js")
                 .permitAll()
-                .antMatchers(HttpMethod.GET,"/cities", "/forecast/**").hasAuthority("READ_PRIVILEGE")
+                .antMatchers(HttpMethod.GET,"/cities", "/forecast/**").hasAuthority("ROLE_USER")
+                .antMatchers("/user").permitAll()
                 .antMatchers("/register").permitAll()
                 .anyRequest()
                 .authenticated()
@@ -55,12 +60,21 @@ public class SecurityConfig {
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class).
         csrf().disable();
+
         return http.build();
     }
-//    @Bean
-//    PasswordEncoder getPasswordEncoder() {
-//        return  NoOpPasswordEncoder.getInstance();
-//    }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurerAdapter() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**").allowedMethods("GET", "POST", "PUT", "DELETE").allowedOrigins("*")
+                        .allowedHeaders("*");
+            }
+        };
+    }
+
     @Bean
     public AuthenticationManager authenticationManager (AuthenticationConfiguration config) throws Exception{
         return config.getAuthenticationManager();
@@ -73,6 +87,7 @@ public class SecurityConfig {
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
     }
+
 
 
     @Bean
